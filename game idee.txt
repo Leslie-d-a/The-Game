@@ -1,0 +1,7 @@
+het spel gaat over iemand die 100 dagen moet overleven. 
+
+elke dag krijgt diegene een keuze welke kant op te gaat. dat kan voedsel, enemy, wapen of een lege weg zijn.
+
+soms is er ook een klein kans om een soort side quest te doen. dat zal een klein verhaal zijn. als je dat verhaal helemaal goed doet krijg je een bonus item dat je zal helpen met het verdere avontuur naar de honderd dagen. als je dit niet goed doet krijg je een setback door een item te verliezen of gewoon helemaal af te zijn.
+
+er zullen 5 verschillende soorten enemies en voedsel komen. ook minstens 2 side quests en er komen 3 wapens (zwaard, boog, battle-axe).

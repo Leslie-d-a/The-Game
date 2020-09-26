@@ -1,7 +1,7 @@
 body {
 	padding: 40px;
 	background-color: black;
-	color: limegreen;
+	color: lime;
 	text-align: center;
 }
 
@@ -9,10 +9,30 @@ h1 {
 	font-size: 40px;
 }
 
+h2 {
+	font-size: 35px;
+}
+
 p {
 	font-size: 30px;
 }
 
-#bad {
+#enemy {
 	color: red;
+}
+
+#weapon {
+	color: deepskyblue;
+}
+
+#food {
+	color: limegreen;
+}
+
+#road {
+	color: dimgray;
+}
+
+#quest {
+	color: yellow;
 }
