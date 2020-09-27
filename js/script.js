@@ -26,7 +26,7 @@ var hasSword = true;
 var hasBow = false;
 var hasBattleAxe = false;
 var hasRock = false;
-var textDelay = 0;
+var textDelay = 2000;
 
 function sleep(ms) {
   return new Promise(
