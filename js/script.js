@@ -7,6 +7,7 @@ var himHer;
 var aAn;
 var day = 1;
 var yesNo;
+var leftRight;
 var left;
 var forward;
 var right;
@@ -303,6 +304,24 @@ async function quest1() {
 		createPElement("The note reads:");
 		await sleep(textDelay);
 		createPElement("'Beware this is a very dangerous cave. you will need a decent amount of gear to get out alive again. proceed with caution'", undefined, "note");
+		await sleep(textDelay);
+		createPElement(warriorName + " enters the cave which is very damp.");
+		await sleep(textDelay);
+		createPElement(heShe + " wanders further into the depths of the cave.");
+		await sleep(textDelay);
+		createPElement("Around two minutes of walking through a small tunnel the cave gets wider and splits up into two tunnels.");
+		await sleep(textDelay);
+		createPElement("On " + hisHer + " left " + warriorName + " sees a dark tunnel.");
+		await sleep(textDelay);
+		createPElement("On " + hisHer + " right " + warriorName + " hears some faint noises");
+		leftRight = prompt("Which side will " + warriorName + " decide to go? left/right");
+		leftRight = leftRight.toLowerCase();
+		do {
+			if (leftRight == "right") {
+				
+			}
+		} while (leftRight == "right");
+
 	}
 	else {
 		await sleep(textDelay);
