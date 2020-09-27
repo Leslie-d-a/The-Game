@@ -21,7 +21,7 @@ p {
 }
 
 button {
-	padding-right: 20px; 
+	margin-right: 20px; 
 	font-size: 30px;
 	font-family: 'David Libre';
 }
@@ -46,6 +46,18 @@ button {
 	color: yellow;
 }
 
+#item {
+	color: darkorchid;
+}
+
+#bad {
+	color: red;
+}
+
+#good {
+	color: lime;
+}
+
 #character {
 	float: right;
 }
@@ -53,6 +65,7 @@ button {
 #note {
 	padding: 20px;
 	font-family: 'Dancing Script';
+	font-size: 40px;
 	color: black;
 	width: 400px;
 	background-color: beige;

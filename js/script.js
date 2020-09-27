@@ -18,8 +18,13 @@ var foodType;
 var foodState;
 var apples = 0;
 var bananas = 0;
+var maxPotions = 0;
 var health = 100;
-var textDelay = 1000;
+var hasSword = true;
+var hasBow = false;
+var hasBattleAxe = false;
+var hasRock = false;
+var textDelay = 0;
 
 function sleep(ms) {
   return new Promise(
@@ -46,10 +51,16 @@ function createPElement (text, direction, idname) {
 }
 
 //creates new "h1" element
-function createH1Element (text) {
+function createH1Element (text, idname) {
 	var h1Element = document.createElement("h1");
 	var h1ElementText = document.createTextNode(text);
 	h1Element.appendChild(h1ElementText);
+	if (idname != undefined) {
+		h1Element.id = idname;
+	}
+	else {
+		h1Element.id = "title"
+	}
 	document.getElementById("story").appendChild(h1Element);
 	window.scrollTo(0,document.body.scrollHeight);
 }
@@ -70,6 +81,11 @@ function createImgElement (src) {
 	imgElement.src = src
 	document.getElementById("story").appendChild(imgElement);
 	window.scrollTo(0,document.body.scrollHeight);
+}
+
+async function death() {
+	await sleep(textDelay);
+	createH1Element("You have chosen the wrong option an let your warrior die. You've made it to day " + day + ". Press f5 to try again.", "bad");
 }
 
 function determinePathType (type, direction) {
@@ -234,8 +250,8 @@ function foodRandom() {
 }
 
 async function foodPath() {
+	await sleep(textDelay);
 	createPElement("When " + warriorName + " gets there " + heShe + " finds " + foodRandom() + ".");
-
 	if (foodState == "not rotten") {
 		await sleep(textDelay);
 		yesNo = prompt(warriorName + " finds " + aAn + " " + foodType + ". Will " + warriorName + " take the " + foodType + "? yes/no");
@@ -275,17 +291,20 @@ async function foodPath() {
 }
 
 async function roadPath() {
+	await sleep(textDelay);
 	createPElement(warriorName + " found nothing while walking on the road.");
 	dayCycle();
 }
 
 async function quest1() {
 	await sleep(textDelay);
-	createH1Element("The quest to save a lost friend Aimon Elyra");
+	createH1Element("The quest to save the lost friend of Theodre Olasatra");
 	await sleep(textDelay);
 	createImgElement("pictures/Theodre Olasatra.png");
 	await sleep(textDelay);
-	createPElement("Theodre Olasatra: Hello warrior my name is Theodre Olasatra and i have lost my friend Aimon Elyra within this cave.");
+	createPElement("Theodre Olasatra: Hello warrior my name is Theodre Olasatra and i have lost my friend Aimon Elyra and he might be this cave.");
+	await sleep(textDelay);
+	createPElement("Theodre Olasatra: It is way too dangerous for me to go in as i don't have any weapons.");
 	await sleep(textDelay);
 	createPElement("Theodre Olasatra: If you decide to help me, i will give you a health potion that heals you to full health.");
 	await sleep(textDelay);
@@ -294,6 +313,8 @@ async function quest1() {
 	yesNo = prompt("Theodre Olasatra asks if you will help him find his friend. will you help him? yes/no");
 	yesNo = yesNo.toLowerCase();
 	if (yesNo == "yes") {
+		await sleep(textDelay);
+		createPElement(warriorName + " decides to help Theodre Olasatra");
 		await sleep(textDelay);
 		createPElement("Theodre Olasatra: Thank you so much!!!");
 		await sleep(textDelay);
@@ -314,14 +335,167 @@ async function quest1() {
 		createPElement("On " + hisHer + " left " + warriorName + " sees a dark tunnel.");
 		await sleep(textDelay);
 		createPElement("On " + hisHer + " right " + warriorName + " hears some faint noises");
+		await sleep(textDelay);
 		leftRight = prompt("Which side will " + warriorName + " decide to go? left/right");
 		leftRight = leftRight.toLowerCase();
-		do {
-			if (leftRight == "right") {
-				
+		if (leftRight == "left") {
+			await sleep(textDelay);
+			createPElement(warriorName + " decides to take the left tunnel.");
+			await sleep(textDelay);
+			createPElement("After around a minute of walking " + heShe + " finds out it's a dead end so " + heShe + " walks back to take the other tunnel.");
+			await sleep(textDelay);
+			createPElement("After yet another minute " + warriorName + " makes it back to the split an takes the other tunnel.");
+			leftRight = "right"
+			await sleep(textDelay);
+			createPElement(heShe + " decides to take the right tunnel.");
+		} 
+		else {
+			await sleep(textDelay);
+			createPElement(warriorName + " decides to take the right tunnel.");
+		}
+		if (leftRight == "right") {
+			await sleep(textDelay);
+			createPElement(warriorName + " walks into the tunnel which seems endless and is very cold");
+			await sleep(textDelay);
+			createPElement("After around 10 minutes of walking " + warriorName + " finds a large rock.", undefined, "item");
+			await sleep(textDelay);
+			yesNo = prompt("Will " + warriorName + " take the large rock? yes/no");
+			yesNo = yesNo.toLowerCase();
+			if (yesNo == "yes") {
+				await sleep(textDelay);
+				createPElement(warriorName + " decides to take the large rock.");
+				hasRock = true;
+			} 
+			else {
+				await sleep(textDelay);
+				createPElement(warriorName + " decides to leave the large rock");
 			}
-		} while (leftRight == "right");
+			await sleep(textDelay);
+			createPElement(heShe + " moves on to find another split in the cave.");
+			await sleep(textDelay);
+			leftRight = prompt("Which side will " + warriorName + " decide to go? left/right");
+			leftRight = leftRight.toLowerCase();
+			if (leftRight == "left"){
+				await sleep(textDelay);
+				createPElement(heShe + " decides to take the left tunnel.");
+				await sleep(textDelay);
+				createPElement("After a bit of " + warriorName + " hears a faint scream and ups the pace.");
+				await sleep(textDelay);
+				createPElement("Not long after the scream there is a room that splits into three tunnels.");
+				await sleep(textDelay);
+				leftRight = prompt("Which side will " + warriorName + " decide to go? left/middle/right");
+				leftRight = leftRight.toLowerCase();
+				if (leftRight == "left") {
+					await sleep(textDelay);
+					createPElement(heShe + " decides to take the left tunnel.");
+					await sleep(textDelay);
+					createPElement(warriorName + " runs into the tunnel thinking it was the right one.");
+					await sleep(textDelay);
+					createPElement("But not long after " + heShe + " started running " + heShe + " falls into a deep hole dying from the impact.");
+					death();
+					return
+				}
+				else if (leftRight == "middle"){
+					await sleep(textDelay);
+					createPElement(heShe + " decides to take the middle tunnel.");
+					await sleep(textDelay);
+					createPElement(warriorName + " runs into the tunnel thinking it was the right one.");
+					await sleep(textDelay);
+					createPElement("But what " + heShe + " didn't realize is that " + heShe + " ran straight into an underground enemy camp.");
+					await sleep(textDelay);
+					createPElement(warriorName + " manages to kill a few but after 5 minutes of fighting the amount of enemies gets too much and " + heshe + " dies from the many stab wounds.");
+					death();
+					return
+				}
+				else {
+					await sleep(textDelay);
+					createPElement(heShe + " decides to take the right tunnel.");
+					await sleep(textDelay);
+					createPElement(warriorName + " runs into the tunnel thinking it was the right one.");
+					await sleep(textDelay);
+					createPElement("Which it was because " + heShe + " hears another scream from the tunnel.");
+					await sleep(textDelay);
+					createPElement(warriorName + " turns up the pace even more sprinting towards the scream.");
+					await sleep(textDelay);
+					createPElement("When " + heShe + " gets there " + heShe + " is in a small room with multiple cells.");
+					await sleep(textDelay);
+					createPElement("I one of the cells was Theodre Olasatra's friend Aimon Elyra screaming for help.");
+					await sleep(textDelay);
+					createPElement(warriorName + " sees there is a lock on the door.");
+					if (hasRock == true) {
+						await sleep(textDelay);
+						createPElement(heShe + " grabs the rock " + heShe + " found a bit ago and smashes the lock with it.");
+						await sleep(textDelay);
+						createPElement("Aimon Elyra barges out of the cell thanking " + warriorName);
+						await sleep(textDelay);
+						createImgElement("pictures/Aimon Elyra.png");
+						await sleep(textDelay);
+						createPElement("Aimon Elyra: Thank you ow so much!");
+						await sleep(textDelay);
+						createPElement("Aimon Elyra: Did Theodre send you?");
+						await sleep(textDelay);
+						createPElement("Aimon Elyra: Doesn't matter, help me get the hell out of here!");
+						await sleep(textDelay);
+						createPElement("Aimon Elyra: I was captured by those stupid orcs for no reason.");
+						await sleep(textDelay);
+						createPElement("Aimon Elyra: Anyway how do we get out.");
+						await sleep(textDelay);
+						createPElement(warriorName + " gives Aimon the rock and they start walking towards the exit of the cave.");
+						await sleep(textDelay);
+						createPElement("On their way to the exit they encount a few orcs which get angry very quick");
+						await sleep(textDelay);
+						createPElement("Aimon bashes one in the head with the rock and " + warriorName + " kills the remaing two with " + hisHer + " sword losing 10 hp");
+						health = health - 10;
+						await sleep(textDelay);
+						createPElement(warriorName + " and Aimon make it to the exit with just a few minor cuts.");
+						await sleep(textDelay);
+						createPElement("When they get outside they get meet by Theodre who is clearly very happy to see his friend again.");
+						await sleep(textDelay);
+						createImgElement("pictures/Theodre Olasatra.png");
+						await sleep(textDelay);
+						createPElement("Theodre Olasatra: You have saved my friend!!!");
+						await sleep(textDelay);
+						createPElement("Theodre Olasatra: Thank you so much!!! and as a reward here is a max healt potion.");
+						maxPotions = maxPotions + 1;
+						await sleep(textDelay);
+						createPElement(warriorName + " now has " + maxPotions + " max healt potions.");
+						await sleep(textDelay);
+						createPElement("Aimon thanks " + warriorName + " again and they walk off on a small dirt path.");
+						await sleep(textDelay);
+						createH1Element("The quest to save the lost friend of Theodre Olasatra (COMPLETED)", "good");
 
+					}
+					else {
+						await sleep(textDelay);
+						createPElement(warriorName + " doesn't have anything to open the lock with.");
+						await sleep(textDelay);
+						createPElement(heShe + " remembers the rock that was laying on the floor");
+						await sleep(textDelay);
+						createPElement(warriorName + " comforts Aimon Elyra and goes back to grab the rock.");
+						await sleep(textDelay);
+						createPElement("On " + hisHer + " way back " + warriorName + " hears to voices coming from another tunnel.");
+						await sleep(textDelay);
+						createPElement("Not long after that a large group of enemies walk straight into " + himHer + ".");
+						await sleep(textDelay);
+						createPElement(warriorName + " tries to win the battle but loses the large group of enemies.");
+						death();
+						return
+					}
+				}
+			}
+			else {
+				await sleep(textDelay);
+				createPElement(heShe + " decides to take the right tunnel.");
+				await sleep(textDelay);
+				createPElement(warriorName + " hears a noise");
+				await sleep(textDelay);
+				createPElement("Before " + heShe + " can turn around " + heShe + " gets jumped by three enemies");
+				await sleep(textDelay);
+				createPElement("After a bit of struggle " + heShe + " loses the battle and dies");
+				death();
+				return
+			}
+		}
 	}
 	else {
 		await sleep(textDelay);
