@@ -20,6 +20,8 @@ var apples = 0;
 var bananas = 0;
 var maxPotions = 0;
 var health = 100;
+var hunger = 100;
+var starving = false;
 var hasSword = true;
 var hasBow = false;
 var hasBattleAxe = false;
@@ -83,9 +85,60 @@ function createImgElement (src) {
 	window.scrollTo(0,document.body.scrollHeight);
 }
 
-async function death() {
-	await sleep(textDelay);
-	createH1Element("You have chosen the wrong option an let your warrior die. You've made it to day " + day + ". Press f5 to try again.", "bad");
+async function death(cause) {
+	if (cause == "choice") {
+		await sleep(textDelay);
+		createH1Element("You have chosen the wrong option an let your warrior die. You've made it to day " + day + ". Press f5 to try again.", "bad");
+
+	}
+	else if (cause == "starved") {
+		await sleep(textDelay);
+		createH1Element("You have chosen the wrong option an let your warrior starve. You've made it to day " + day + ". Press f5 to try again.", "bad");
+	}
+}
+
+async function eatFood() {
+	if (hunger < 100) {
+		await sleep(textDelay);
+		createPElement(warriorName + " looks in " + hisHer + " bag to see what food " + heShe + " has.");
+		await sleep(textDelay);
+		createPElement(warriorName + " has " + apples + " apple(s) and " + bananas + " banana(s)");
+		await sleep(textDelay);
+		eat = prompt("What will " + warriorName + " eat? banana/apple");
+		eat = eat.toLowerCase();
+		if (eat == "banana") {
+			await sleep(textDelay);
+			createPElement(warriorName + " decides to eat a banana and gains 15 hunger.");
+			bananas = bananas - 1;
+			if (hunger + 15 > 100){
+				hunger = 100;
+			}
+			else {
+				hunger + 15;
+			}
+		}
+		else {
+			await sleep(textDelay);
+			createPElement(warriorName + " decides to eat an apple and gains 15 hunger.");
+			apples = apples - 1;
+			if (hunger + 15 > 100){
+				hunger = 100;
+			}
+			else {
+				hunger + 15;
+			}
+		}
+		await sleep(textDelay);
+		createPElement(warriorName + " now has " + apples + " apple(s) and " + bananas + " banana(s)");
+	}
+	else {
+		await sleep(textDelay);
+		createPElement(warriorName + " has full hunger and closes " + hisHer + " bag.");
+	}
+	var d = document.getElementById("buttons");
+	d.parentNode.appendChild(d);
+
+	refreshStats();
 }
 
 function determinePathType (type, direction) {
@@ -590,6 +643,11 @@ async function dayCycle() {
 	await sleep(textDelay);
 	createH2Element("Day " + day);
 
+	if (health < 1) {
+		death("hunger");
+		return
+	}
+
 	if (day<100) {
 		await sleep(textDelay);
 		createPElement("On " + hisHer + " left. " + warriorName + " sees " + leftRandom() + ".", "left");
@@ -608,6 +666,19 @@ async function dayCycle() {
 		var d = document.getElementById("buttons");
 		d.parentNode.appendChild(d);
 
+		if (day != 1){
+			if (hunger > 0) {
+				hunger = hunger - 10
+			}
+			else {
+				starving = true
+			}
+
+			if (starving == true) {
+				health = health - 10
+			}
+		}
+		
 		refreshStats();
 
 		day = day + 1;
@@ -659,6 +730,11 @@ function refreshStats() {
 
 	var pElement = document.createElement("p");
 	var pElementText = document.createTextNode("health: " + health + " hp.");
+	pElement.appendChild(pElementText);
+	document.getElementById("stats").appendChild(pElement);
+
+	var pElement = document.createElement("p");
+	var pElementText = document.createTextNode("hunger: " + hunger);
 	pElement.appendChild(pElementText);
 	document.getElementById("stats").appendChild(pElement);
 }
@@ -728,6 +804,18 @@ async function startGame(){
 	var button3Text = document.createTextNode("Walk Right");
 	button3.appendChild(button3Text);
 	document.getElementById("buttons").appendChild(button3);
+
+
+	//creates eat button
+
+	var button4 = document.createElement("button");
+	button4.onclick = function() {
+		eatFood();
+	};
+	var button4Text = document.createTextNode("Eat Food");
+	button4.appendChild(button4Text);
+	document.getElementById("buttons").appendChild(button4);
+
 
 }
 
