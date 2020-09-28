@@ -1,18 +1,78 @@
 body {
-	padding: 40px;
+	padding: 40px 80px;
 	background-color: black;
-	color: limegreen;
-	text-align: center;
+	color: white;
+	text-align: left;
+	font-family: 'David Libre';
 }
 
 h1 {
 	font-size: 40px;
+	text-align: center;
+}
+
+h2 {
+	font-size: 35px;
+	text-align: center;
 }
 
 p {
 	font-size: 30px;
 }
 
+button {
+	margin-right: 20px; 
+	font-size: 30px;
+	font-family: 'David Libre';
+}
+
+#enemy {
+	color: red;
+}
+
+#weapon {
+	color: deepskyblue;
+}
+
+#food {
+	color: limegreen;
+}
+
+#road {
+	color: dimgray;
+}
+
+#quest {
+	color: yellow;
+}
+
+#item {
+	color: darkorchid;
+}
+
 #bad {
 	color: red;
+}
+
+#good {
+	color: lime;
+}
+
+#character {
+	float: right;
+}
+
+#note {
+	padding: 20px;
+	font-family: 'Dancing Script';
+	font-size: 40px;
+	color: black;
+	width: 400px;
+	background-color: beige;
+	border: 5px solid darkkhaki;
+	border-radius: 10px;
+}
+
+#stats {
+	float: right;
 }
