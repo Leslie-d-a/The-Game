@@ -85,7 +85,7 @@ function createImgElement (src) {
 	window.scrollTo(0,document.body.scrollHeight);
 }
 
-async function death(cause) {
+async function death (cause) {
 	if (cause == "choice") {
 		await sleep(textDelay);
 		createH1Element("You have chosen the wrong option an let your warrior die. You've made it to day " + day + ". Press f5 to try again.", "bad");
@@ -97,9 +97,8 @@ async function death(cause) {
 	}
 }
 
-async function eatFood() {
+async function eatFood () {
 	if (hunger < 100) {
-		await sleep(textDelay);
 		createPElement(warriorName + " looks in " + hisHer + " bag to see what food " + heShe + " has.");
 		await sleep(textDelay);
 		createPElement(warriorName + " has " + apples + " apple(s) and " + bananas + " banana(s)");
@@ -110,7 +109,7 @@ async function eatFood() {
 			await sleep(textDelay);
 			createPElement(warriorName + " decides to eat a banana and gains 15 hunger.");
 			bananas = bananas - 1;
-			if (hunger + 15 > 100){
+			if ((hunger + 15) > 100){
 				hunger = 100;
 			}
 			else {
@@ -121,7 +120,7 @@ async function eatFood() {
 			await sleep(textDelay);
 			createPElement(warriorName + " decides to eat an apple and gains 15 hunger.");
 			apples = apples - 1;
-			if (hunger + 15 > 100){
+			if ((hunger + 15) > 100){
 				hunger = 100;
 			}
 			else {
@@ -445,7 +444,7 @@ async function quest1() {
 					createPElement(warriorName + " runs into the tunnel thinking it was the right one.");
 					await sleep(textDelay);
 					createPElement("But not long after " + heShe + " started running " + heShe + " falls into a deep hole dying from the impact.");
-					death();
+					death("choice");
 					return
 				}
 				else if (leftRight == "middle"){
@@ -457,7 +456,7 @@ async function quest1() {
 					createPElement("But what " + heShe + " didn't realize is that " + heShe + " ran straight into an underground enemy camp.");
 					await sleep(textDelay);
 					createPElement(warriorName + " manages to kill a few but after 5 minutes of fighting the amount of enemies gets too much and " + heshe + " dies from the many stab wounds.");
-					death();
+					death("choice");
 					return
 				}
 				else {
@@ -531,7 +530,7 @@ async function quest1() {
 						createPElement("Not long after that a large group of enemies walk straight into " + himHer + ".");
 						await sleep(textDelay);
 						createPElement(warriorName + " tries to win the battle but loses the large group of enemies.");
-						death();
+						death("choice");
 						return
 					}
 				}
@@ -545,7 +544,7 @@ async function quest1() {
 				createPElement("Before " + heShe + " can turn around " + heShe + " gets jumped by three enemies");
 				await sleep(textDelay);
 				createPElement("After a bit of struggle " + heShe + " loses the battle and dies");
-				death();
+				death("choice");
 				return
 			}
 		}
@@ -644,7 +643,7 @@ async function dayCycle() {
 	createH2Element("Day " + day);
 
 	if (health < 1) {
-		death("hunger");
+		death("starved");
 		return
 	}
 
